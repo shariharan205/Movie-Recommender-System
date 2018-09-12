@@ -11,3 +11,9 @@ from surprise.prediction_algorithms.knns import KNNWithMeans
 from surprise.model_selection.validation import cross_validate
 from surprise import accuracy
 from surprise.model_selection import KFold
+
+ratings = pd.read_csv('ratings.csv')
+movie = pd.read_csv('movies.csv')
+df = pd.DataFrame({'itemID': list(ratings.movieId), 'userID': list(ratings.userId), 'rating': list(ratings.rating)})
+reader = Reader(rating_scale=(0.5, 5.0))
+data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
