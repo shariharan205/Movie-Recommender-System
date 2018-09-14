@@ -17,3 +17,8 @@ movie = pd.read_csv('movies.csv')
 df = pd.DataFrame({'itemID': list(ratings.movieId), 'userID': list(ratings.userId), 'rating': list(ratings.rating)})
 reader = Reader(rating_scale=(0.5, 5.0))
 data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
+
+print("====================================Sparsity of movie rating dataset=========================================================")
+num_movies = len(set(ratings['movieId']))
+num_users = len(set(ratings['userId']))
+sparsity = len(ratings) / (num_movies * num_users)
