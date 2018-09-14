@@ -22,3 +22,6 @@ print("====================================Sparsity of movie rating dataset=====
 num_movies = len(set(ratings['movieId']))
 num_users = len(set(ratings['userId']))
 sparsity = len(ratings) / (num_movies * num_users)
+
+print("====================================Histogram=============================================================")
+plt.hist(ratings['rating'],bins = np.arange(0.25,5.5,0.5),color = '#58CCF2')
