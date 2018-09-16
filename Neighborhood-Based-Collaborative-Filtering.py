@@ -25,3 +25,11 @@ sparsity = len(ratings) / (num_movies * num_users)
 
 print("====================================Histogram=============================================================")
 plt.hist(ratings['rating'],bins = np.arange(0.25,5.5,0.5),color = '#58CCF2')
+
+print("====================================Distribution of Ratings Among Movies=====================================================")
+c1 = Counter(ratings['movieId'])
+plt.bar(np.arange(num_movies),sorted(c1.values(),reverse = True))
+plt.xticks([], [])
+plt.title('Distribution of ratings among movies')
+plt.ylabel('Number of ratings')
+plt.xlabel('Movies')
