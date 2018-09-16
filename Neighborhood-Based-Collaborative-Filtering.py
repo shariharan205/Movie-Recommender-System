@@ -33,3 +33,12 @@ plt.xticks([], [])
 plt.title('Distribution of ratings among movies')
 plt.ylabel('Number of ratings')
 plt.xlabel('Movies')
+
+print("===================================Distribution of Ratings Among Actors=====================================================")
+c2 = Counter(ratings['userId'])
+plt.bar(np.arange(num_users),sorted(c2.values(),reverse = True))
+plt.xticks([], [])
+plt.title('Distribution of ratings among users')
+plt.ylabel('Number of ratings')
+plt.xlabel('Users')
+
