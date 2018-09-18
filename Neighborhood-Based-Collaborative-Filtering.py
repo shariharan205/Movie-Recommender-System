@@ -48,3 +48,19 @@ plt.hist(var, bins = np.arange(0,11,0.5))
 plt.xlabel('Variance of ratings')
 plt.ylabel('Number of movies')
 plt.title('Distribution of variance of ratings')
+
+print("====================================KNN Colloborative Filtering=============================================================")
+k_range = range(2,100,2)
+avg_rmse, avg_mae = [], []
+for k in k_range:
+    algo = KNNWithMeans(k=k, sim_options = {'name':'pearson'}) 
+    cv_results = cross_validate(algo, data, measures=['RMSE', 'MAE'], cv=10, verbose=False)
+    avg_rmse.append(np.mean(cv_results['test_rmse']))
+    avg_mae.append(np.mean(cv_results['test_mae']))
+    
+plt.plot(k_range, avg_rmse, label = "Average RMSE")
+plt.plot(k_range, avg_mae, label = "Average MAE")
+plt.xlabel('Number of neighbors')
+plt.ylabel('Error')
+plt.legend()
+plt.show()
