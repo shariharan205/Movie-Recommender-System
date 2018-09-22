@@ -84,3 +84,23 @@ def high_var_trim(data):
         movie_rating_map[val[1]].append(val[2])
     high_var_data = [val for val in data if len(movie_rating_map[val[1]]) >= 5 and np.var(movie_rating_map[val[1]]) >= 2.0]
     return high_var_data
+
+print("====================================Average RMSE for popular trim=============================================================")
+k_range = range(2,100,2)
+avg_rmse = []
+kf = KFold(n_splits=10)
+for k in k_range:
+    algo = KNNWithMeans(k=k, sim_options = {'name':'pearson'}) 
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(popular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+    avg_rmse.append(np.mean(k_rmse))
+        
+plt.plot(k_range, avg_rmse, label = "Average RMSE")
+plt.xlabel('Number of neighbors')
+plt.ylabel('Error')
+plt.legend()
+plt.show()
+print('The minimum average RMSE is %f for k = %d' %(np.min(avg_rmse),np.argmin(avg_rmse)))
