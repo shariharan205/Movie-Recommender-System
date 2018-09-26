@@ -144,3 +144,23 @@ plt.ylabel('Error')
 plt.legend()
 plt.show()
 print('The minimum average RMSE is %f for k = %d' %(np.min(avg_rmse),np.argmin(avg_rmse)))
+
+print("====================================ROC Curves=============================================================")
+train_set, test_set = train_test_split(data, test_size=0.1, random_state=0)
+thresholds = [2.5,3,3.5,4]
+algo = KNNWithMeans(k=20, sim_options = {'name':'pearson'}) 
+algo.fit(train_set)
+predictions = algo.test(test_set)
+pred_est = np.array([i.est for i in predictions])
+actual_ratings = np.array([i.r_ui for i in predictions])
+for threshold in thresholds:
+    y_score = pred_est
+    y_true = actual_ratings>=threshold
+    fpr, tpr, _ = roc_curve(y_true, y_score)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, lw=2, label='Threshold = %0.1f, AUC = %0.4f' % (threshold,roc_auc))
+    plt.xlabel('False Positive Rate (FPR)')
+    plt.ylabel('True Positive Rate')
+    plt.legend(loc ='lower right')
+    plt.title('Receiver Operating Characteristics (ROC) for threshold = %0.1f' %threshold)
+    plt.show()
