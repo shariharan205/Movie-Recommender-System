@@ -13,3 +13,9 @@ df = pd.DataFrame({'itemID': list(ratings.movieId), 'userID': list(ratings.userI
 
 reader = Reader(rating_scale=(1, 5))
 data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
+
+print("====================================Trimming================================================================")
+def popular_trim(data):
+    movie_id_counter = Counter([val[1] for val in data])
+    popular_trimmed_data = [val for val in data if movie_id_counter[val[1]] > 2]
+    return popular_trimmed_data
