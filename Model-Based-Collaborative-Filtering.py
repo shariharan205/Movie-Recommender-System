@@ -35,3 +35,15 @@ def high_var_trim(data):
     high_var_data = [val for val in data if
                      len(movie_rating_map[val[1]]) >= 5 and np.var(movie_rating_map[val[1]]) >= 2.0]
     return high_var_data
+
+print("=====================Non-negative Matrix Factorization based filtering=============================================================")
+print("Evaluating NNMF colloborative filtering based on #of latent factors vs RMSE and MAE errors on 10folds cross-validation")
+
+k_range = range(2, 51, 2)
+avg_rmse, avg_mae = [], []
+
+for k in k_range:
+    algo = NMF(n_factors=k)
+    cv_result = cross_validate(algo, data, measures=['RMSE', 'MAE'], cv=10, verbose=False)
+    avg_rmse.append(np.mean(cv_result['test_rmse']))
+    avg_mae.append(np.mean(cv_result['test_mae']))
