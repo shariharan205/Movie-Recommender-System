@@ -47,3 +47,10 @@ for k in k_range:
     cv_result = cross_validate(algo, data, measures=['RMSE', 'MAE'], cv=10, verbose=False)
     avg_rmse.append(np.mean(cv_result['test_rmse']))
     avg_mae.append(np.mean(cv_result['test_mae']))
+
+plt.plot(k_range, avg_rmse, label="Average RMSE")
+plt.plot(k_range, avg_mae, label="Average MAE")
+plt.xlabel('Number of latent factors', fontsize=15)
+plt.ylabel('Error', fontsize=15)
+plt.legend()
+plt.show()
