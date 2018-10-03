@@ -54,3 +54,7 @@ plt.xlabel('Number of latent factors', fontsize=15)
 plt.ylabel('Error', fontsize=15)
 plt.legend()
 plt.show()
+
+print("=================================Optimal Number of Latent Factors=============================================================")
+all_genres = set('|'.join(movies.genres).split('|'))
+print('#of Genres - ', len(all_genres))
