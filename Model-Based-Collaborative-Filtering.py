@@ -58,3 +58,8 @@ plt.show()
 print("=================================Optimal Number of Latent Factors=============================================================")
 all_genres = set('|'.join(movies.genres).split('|'))
 print('#of Genres - ', len(all_genres))
+
+print("===================================NNMF colloborative filtering on popular movie trimmed set=================================================")
+avg_rmse = []
+k_range = range(2, 51, 2)
+kf = KFold(n_splits=10)
