@@ -63,3 +63,14 @@ print("===================================NNMF collaborative filtering on popula
 avg_rmse = []
 k_range = range(2, 51, 2)
 kf = KFold(n_splits=10)
+
+for k in k_range:
+    algo = NMF(n_factors=k)
+
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(popular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+
+    avg_rmse.append(np.mean(k_rmse))
