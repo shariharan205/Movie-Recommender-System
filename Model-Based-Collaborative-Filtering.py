@@ -59,7 +59,7 @@ print("=================================Optimal Number of Latent Factors========
 all_genres = set('|'.join(movies.genres).split('|'))
 print('#of Genres - ', len(all_genres))
 
-print("===================================NNMF collaborative filtering on popular movie trimmed set=================================================")
+print("===================================NNMF colloborative filtering on popular movie trimmed set=================================================")
 avg_rmse = []
 k_range = range(2, 51, 2)
 kf = KFold(n_splits=10)
@@ -74,3 +74,10 @@ for k in k_range:
         k_rmse.append(accuracy.rmse(predictions, verbose=False))
 
     avg_rmse.append(np.mean(k_rmse))
+
+print('Minimum average RMSE is ', min(avg_rmse), ' for k = ', k_range[np.argmin(avg_rmse)])
+plt.plot(k_range, avg_rmse)
+plt.xlabel('Number of latent factors', fontsize=15)
+plt.ylabel('Average RMSE', fontsize=15)
+plt.title('#latent factors vs Average RMSE for NMF Popular trimming')
+plt.show()
