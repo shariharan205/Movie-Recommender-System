@@ -81,3 +81,19 @@ plt.xlabel('Number of latent factors', fontsize=15)
 plt.ylabel('Average RMSE', fontsize=15)
 plt.title('#latent factors vs Average RMSE for NMF Popular trimming')
 plt.show()
+
+print("========================NNMF colloborative filtering on unpopular movie trimmed set==================================")
+avg_rmse = []
+k_range = range(2, 51, 2)
+kf = KFold(n_splits=10)
+
+for k in k_range:
+    algo = NMF(n_factors=k)
+
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(unpopular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+
+    avg_rmse.append(np.mean(k_rmse))
