@@ -128,3 +128,11 @@ plt.xlabel('Number of latent factors', fontsize=15)
 plt.ylabel('Average RMSE', fontsize=15)
 plt.title('#latent factors vs Average RMSE for NMF High Variance trimming')
 plt.show()
+
+print("=============================ROC Curve for NNMF for different thresholds==============================")
+optimal_latent_factors = 20
+trainset, testset = train_test_split(data, test_size=.10)
+
+algo = NMF(n_factors=optimal_latent_factors)
+algo.fit(trainset)
+predictions = algo.test(testset)
