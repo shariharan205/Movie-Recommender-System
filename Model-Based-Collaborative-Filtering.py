@@ -158,5 +158,9 @@ for val in thresholds:
     plt.legend(loc="lower right")
     plt.title('ROC Curve with threshold ' + str(val))
     plt.show()
-	
-	
+
+print("==================================Latent factors and Movie Genre relation========================================")
+optimal_latent_factors = 20
+algo = NMF(n_factors = optimal_latent_factors)
+trainset, _ = train_test_split(data, test_size=0.01)
+algo.fit(trainset)
