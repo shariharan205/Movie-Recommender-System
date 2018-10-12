@@ -136,3 +136,27 @@ trainset, testset = train_test_split(data, test_size=.10)
 algo = NMF(n_factors=optimal_latent_factors)
 algo.fit(trainset)
 predictions = algo.test(testset)
+
+actual = [i.r_ui for i in predictions]
+predicted = [i.est for i in predictions]
+
+thresholds = [2.5, 3, 3.5, 4]
+
+for val in thresholds:
+    print("ROC Curve with threshold = ", val)
+    y_test = np.array(actual) >= val
+    # y_score = np.array(predicted) >= val
+    y_score = predicted
+    false_positive_rate, true_positive_rate, _ = roc_curve(y_test, y_score)
+
+    plt.figure()
+    plt.plot(false_positive_rate, true_positive_rate, lw=2, label='area under curve = %0.4f' % auc(false_positive_rate,
+                                                                                                   true_positive_rate))
+    plt.grid(color='0.7', linestyle='--', linewidth=1)
+    plt.xlabel('False Positive Rate', fontsize=15)
+    plt.ylabel('True Positive Rate', fontsize=15)
+    plt.legend(loc="lower right")
+    plt.title('ROC Curve with threshold ' + str(val))
+    plt.show()
+	
+	
