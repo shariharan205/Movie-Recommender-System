@@ -174,3 +174,26 @@ for col in range(v.shape[1]):
     top10_movies = v_col.argsort()[-10:][::-1]
     top10_movies_genres = [(movies.genres[i]) for i in top10_movies]
     print(top10_movies_genres)
+
+print("===========================MF with bias collaborative filtering on 10folds cross-validation=====================")
+k_range = range(2, 51, 2)
+kf = KFold(n_splits=10)
+
+for initmean in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]:
+
+    print(initmean)
+
+    avg_rmse, avg_mae = [], []
+
+    for k in k_range:
+
+        k_rmse, k_mae = [], []
+        for trainset, testset in kf.split(data):
+            algo = SVD(n_factors=k, init_mean=initmean)
+            algo.fit(trainset)
+            predictions = algo.test(testset)
+            k_rmse.append(accuracy.rmse(predictions, verbose=False))
+            k_mae.append(accuracy.mae(predictions, verbose=False))
+
+        avg_rmse.append(np.mean(k_rmse))
+        avg_mae.append(np.mean(k_mae))
