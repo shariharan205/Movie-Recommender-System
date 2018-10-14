@@ -164,3 +164,13 @@ optimal_latent_factors = 20
 algo = NMF(n_factors = optimal_latent_factors)
 trainset, _ = train_test_split(data, test_size=0.01)
 algo.fit(trainset)
+
+u = algo.pu
+v = algo.qi
+
+for col in range(v.shape[1]):
+    print('\nColumn number - ', col)
+    v_col = v[: ,col]
+    top10_movies = v_col.argsort()[-10:][::-1]
+    top10_movies_genres = [(movies.genres[i]) for i in top10_movies]
+    print(top10_movies_genres)
