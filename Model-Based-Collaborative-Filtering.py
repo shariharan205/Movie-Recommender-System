@@ -197,3 +197,18 @@ for initmean in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]:
 
         avg_rmse.append(np.mean(k_rmse))
         avg_mae.append(np.mean(k_mae))
+
+    print('Minimum average RMSE is ', min(avg_rmse), ' for k = ', k_range[np.argmin(avg_rmse)])
+    print('Minimum average MAE is ', min(avg_mae), ' for k = ', k_range[np.argmin(avg_mae)])
+
+    plt.plot(k_range, avg_rmse)
+    plt.xlabel('Number of latent factors', fontsize=15)
+    plt.ylabel('Error', fontsize=15)
+    plt.title("Average RMSE for Matrix Factorization")
+    plt.show()
+
+    plt.plot(k_range, avg_mae)
+    plt.xlabel('Number of latent factors', fontsize=15)
+    plt.ylabel('Error', fontsize=15)
+    plt.title("Average MAE for Matrix Factorization")
+    plt.show()
