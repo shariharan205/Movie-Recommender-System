@@ -212,3 +212,7 @@ for initmean in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]:
     plt.ylabel('Error', fontsize=15)
     plt.title("Average MAE for Matrix Factorization")
     plt.show()
+
+print("==========================RMSE and MAE===================================")
+print('Minimum average RMSE ' , min(avg_rmse))
+print('Minimum average MAE ', min(avg_mae))
