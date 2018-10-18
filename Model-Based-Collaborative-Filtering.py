@@ -216,3 +216,8 @@ for initmean in [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5]:
 print("==========================RMSE and MAE===================================")
 print('Minimum average RMSE ' , min(avg_rmse))
 print('Minimum average MAE ', min(avg_mae))
+
+print("======================== MF with bias collaborative filtering on popular movie trimmed set========================================")
+avg_rmse = []
+k_range = range(2, 51, 2)
+kf = KFold(n_splits=10)
