@@ -221,3 +221,14 @@ print("======================== MF with bias collaborative filtering on popular 
 avg_rmse = []
 k_range = range(2, 51, 2)
 kf = KFold(n_splits=10)
+
+for k in k_range:
+    algo = SVD(n_factors=k, init_mean=0.5)
+
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(popular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+
+    avg_rmse.append(np.mean(k_rmse))
