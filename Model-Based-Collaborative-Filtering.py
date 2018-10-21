@@ -240,3 +240,18 @@ plt.ylabel('Average RMSE', fontsize=15)
 plt.title('#latent factors vs Average RMSE for SVD Popular trimming')
 plt.show()
 
+print("============================MF with bias collaborative filtering on unpopular movie trimmed set==========================")
+avg_rmse = []
+k_range = range(2, 51, 2)
+kf = KFold(n_splits=10)
+
+for k in k_range:
+    algo = SVD(n_factors=k, init_mean=0.5)
+
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(unpopular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+
+    avg_rmse.append(np.mean(k_rmse))
