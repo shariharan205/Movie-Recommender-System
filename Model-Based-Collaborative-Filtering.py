@@ -279,3 +279,9 @@ for k in k_range:
 
     avg_rmse.append(np.mean(k_rmse))
 
+print('Minimum average RMSE is ', min(avg_rmse), ' for k = ', k_range[np.argmin(avg_rmse)])
+plt.plot(k_range, avg_rmse)
+plt.xlabel('Number of latent factors', fontsize=15)
+plt.ylabel('Average RMSE', fontsize=15)
+plt.title('#latent factors vs Average RMSE for SVD High Variance trimming')
+plt.show()
