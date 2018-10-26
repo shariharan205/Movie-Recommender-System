@@ -285,3 +285,17 @@ plt.xlabel('Number of latent factors', fontsize=15)
 plt.ylabel('Average RMSE', fontsize=15)
 plt.title('#latent factors vs Average RMSE for SVD High Variance trimming')
 plt.show()
+
+print("===========================ROC Curve for MF with bias for different thresholds=================================")
+
+optimal_latent_factors = 20
+trainset, testset = train_test_split(data, test_size=.10)
+
+algo = SVD(n_factors = optimal_latent_factors)
+algo.fit(trainset)
+predictions = algo.test(testset)
+
+actual = [i.r_ui for i in predictions]
+predicted = [i.est for i in predictions]
+
+thresholds = [2.5, 3, 3.5, 4]
