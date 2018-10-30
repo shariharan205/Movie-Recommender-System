@@ -19,3 +19,10 @@ movie = pd.read_csv('movies.csv')
 df = pd.DataFrame({'itemID': list(ratings.movieId), 'userID': list(ratings.userId), 'rating': list(ratings.rating)})
 reader = Reader(rating_scale=(0.5, 5.0))
 data = Dataset.load_from_df(df[['userID', 'itemID', 'rating']], reader)
+
+
+def popular_trim(data):
+    print("Popular trimming")
+    movie_id_counter = Counter([val[1] for val in data])
+    popular_trimmed_data = [val for val in data if movie_id_counter[val[1]] > 2]
+    return popular_trimmed_data
