@@ -43,3 +43,9 @@ def high_var_trim(data):
     high_var_data = [val for val in data if
                      len(movie_rating_map[val[1]]) >= 5 and np.var(movie_rating_map[val[1]]) >= 2.0]
     return high_var_data
+
+
+print("====================================Design and test via cross-validation=============================================================")
+avg_rating = df.groupby(['userID'])['rating'].mean().tolist()
+
+
