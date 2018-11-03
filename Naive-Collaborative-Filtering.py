@@ -49,3 +49,6 @@ print("====================================Design and test via cross-validation=
 avg_rating = df.groupby(['userID'])['rating'].mean().tolist()
 
 
+def naive_prediction(dataset):
+    predictions = [avg_rating[dataset[i][0] - 1] for i in range(len(dataset))]
+    return predictions
