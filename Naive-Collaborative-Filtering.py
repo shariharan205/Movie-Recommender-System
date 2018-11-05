@@ -62,3 +62,15 @@ for trainset, testset in kf.split(data):
     k_rmse.append(mean_squared_error(y_true, y_pred))
 avg_rmse = np.mean(k_rmse)
 print('The average RMSE using naive collaborative filter is %0.4f' % avg_rmse)
+
+print("==================================Naive collaborative filter performance on trimmed set====================================================")
+print("====================================Popular trimming=============================================================")
+k_rmse = []
+kf = KFold(n_splits=10)
+for trainset, testset in kf.split(data):
+    testset = popular_trim(testset)
+    y_pred = naive_prediction(testset)
+    y_true = [testset[i][2] for i in range(len(testset))]
+    k_rmse.append(mean_squared_error(y_true, y_pred))
+avg_rmse = np.mean(k_rmse)
+print('The average RMSE for popular movie trimmed set is %0.4f' % avg_rmse)
