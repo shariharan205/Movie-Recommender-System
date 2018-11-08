@@ -96,3 +96,24 @@ for trainset, testset in kf.split(data):
     k_rmse.append(mean_squared_error(y_true, y_pred))
 avg_rmse = np.mean(k_rmse)
 print('The average RMSE for high variance movie trimmed set is %0.4f' % avg_rmse)
+
+print("==============================Performance Comparison=================================================")
+k_range = range(2, 50, 2)
+avg_rmse = []
+kf = KFold(n_splits=10)
+for k in k_range:
+    algo = SVD(n_factors=k)
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(testset)
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+    avg_rmse.append(np.mean(k_rmse))
+
+plt.plot(k_range, avg_rmse, label="Average RMSE")
+plt.xlabel('Number of latent factors')
+plt.ylabel('Error')
+plt.legend()
+plt.show()
+print('The minimum average RMSE is %f for k = %d' % (np.min(avg_rmse), np.argmin(avg_rmse)))
+
