@@ -117,3 +117,23 @@ plt.legend()
 plt.show()
 print('The minimum average RMSE is %f for k = %d' % (np.min(avg_rmse), np.argmin(avg_rmse)))
 
+print("====================================Ranking=====================================================")
+k_range = range(2, 51, 2)
+avg_rmse = []
+kf = KFold(n_splits=10)
+for k in k_range:
+    algo = SVD(n_factors=k)
+    k_rmse = []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(popular_trim(testset))
+        k_rmse.append(accuracy.rmse(predictions, verbose=False))
+    avg_rmse.append(np.mean(k_rmse))
+
+plt.plot(k_range, avg_rmse, label="Average RMSE")
+plt.xlabel('Number of latent factors')
+plt.ylabel('Error')
+plt.legend()
+plt.show()
+print('The minimum average RMSE is %f for k = %d' % (np.min(avg_rmse), np.argmin(avg_rmse)))
+
