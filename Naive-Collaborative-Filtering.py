@@ -137,3 +137,16 @@ plt.legend()
 plt.show()
 print('The minimum average RMSE is %f for k = %d' % (np.min(avg_rmse), np.argmin(avg_rmse)))
 
+
+def get_top_t(predictions, t=10):
+    # First map the predictions to each user.
+    top_t = defaultdict(list)
+    for uid, iid, true_r, est, _ in predictions:
+        top_t[uid].append((iid, est, true_r))
+
+    # Then sort the predictions for each user and retrieve the k highest ones.
+    for uid, user_ratings in top_t.items():
+        user_ratings.sort(key=lambda x: x[1], reverse=True)
+        top_t[uid] = user_ratings[:t]
+
+    return top_t
