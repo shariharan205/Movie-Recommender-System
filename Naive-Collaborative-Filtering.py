@@ -150,3 +150,10 @@ def get_top_t(predictions, t=10):
         top_t[uid] = user_ratings[:t]
 
     return top_t
+
+
+train_set, test_set = train_test_split(data, test_size=0.1, random_state=0)
+algo = KNNWithMeans(k=20, sim_options={'name': 'pearson'})
+algo.fit(train_set)
+predictions = algo.test(test_set)
+top_recos = get_top_t(predictions)
