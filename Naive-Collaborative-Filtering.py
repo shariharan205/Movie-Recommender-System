@@ -174,3 +174,9 @@ def precision_recall_at_k(predictions, k=10, threshold=3.5):
         precisions[uid] = n_rel_and_rec_k / n_rec_k if n_rec_k != 0 else 1
         recalls[uid] = n_rel_and_rec_k / n_rel if n_rel != 0 else 1
     return precisions, recalls
+
+
+print("===================================Plotting precision for KNN Collaborative Filtering=========================================================")
+kf = KFold(n_splits=10)
+algo = KNNWithMeans(k=20, sim_options={'name': 'pearson'})
+threshold = 3
