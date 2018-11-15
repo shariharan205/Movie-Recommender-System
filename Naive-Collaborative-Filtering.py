@@ -193,3 +193,11 @@ for t in range(1, 26):
         t_rec.append(sum(rec for rec in recalls.values()) / len(recalls))
     avg_prec.append(np.mean(t_prec))
     avg_rec.append(np.mean(t_rec))
+
+t_range = range(1, 26)
+
+plt.plot(t_range, avg_prec)
+plt.xlabel('Item set size t', fontsize=15)
+plt.ylabel('Average Precision', fontsize=15)
+plt.title("Precision vs t for KNN")
+plt.show()
