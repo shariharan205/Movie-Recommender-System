@@ -213,3 +213,8 @@ plt.xlabel('Average Recall', fontsize=15)
 plt.ylabel('Average Precision', fontsize=15)
 plt.title("Precision vs Recall for KNN")
 plt.show()
+
+print("===================================Plotting precision for ranking using NNMF based collaborative filtering==================================================")
+kf = KFold(n_splits=10)
+algo = NMF(n_factors=20)
+threshold = 3
