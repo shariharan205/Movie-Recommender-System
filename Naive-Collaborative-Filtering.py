@@ -251,3 +251,11 @@ plt.xlabel('Average Recall', fontsize=15)
 plt.ylabel('Average Precision', fontsize=15)
 plt.title("Precision vs Recall for KNN")
 plt.show()
+
+print("==================================Plotting precision for MF with bias based filtering========================================================")
+
+kf = KFold(n_splits=10)
+algo = SVD(n_factors=20, init_mean=3)
+threshold = 3
+
+avg_prec, avg_rec = [], []
