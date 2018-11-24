@@ -257,5 +257,3 @@ print("==================================Plotting precision for MF with bias bas
 kf = KFold(n_splits=10)
 algo = SVD(n_factors=20, init_mean=3)
 threshold = 3
-
-avg_prec, avg_rec = [], []
