@@ -257,3 +257,16 @@ print("==================================Plotting precision for MF with bias bas
 kf = KFold(n_splits=10)
 algo = SVD(n_factors=20, init_mean=3)
 threshold = 3
+
+avg_prec, avg_rec = [], []
+
+for t in range(1, 26):
+    t_prec, t_rec = [], []
+    for trainset, testset in kf.split(data):
+        algo.fit(trainset)
+        predictions = algo.test(testset)
+        precisions, recalls = precision_recall_at_k(predictions, k=t, threshold=threshold)
+        t_prec.append((sum(prec for prec in precisions.values()) / len(precisions)))
+        t_rec.append(sum(rec for rec in recalls.values()) / len(recalls))
+    avg_prec.append(np.mean(t_prec))
+    avg_rec.append(np.mean(t_rec))
