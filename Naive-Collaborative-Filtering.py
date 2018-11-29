@@ -290,3 +290,10 @@ plt.xlabel('Average Recall', fontsize=15)
 plt.ylabel('Average Precision', fontsize=15)
 plt.title("Precision vs Recall for SVD")
 plt.show()
+
+print("===========================Plotting precision recall curve===============================================")
+kf = KFold(n_splits=5)
+algos = [KNNWithMeans(k=20, sim_options={'name': 'pearson'}), NMF(n_factors=20),
+         SVD(n_factors=20, init_mean=2.5)]
+threshold = 3
+algo_prec, algo_rec = [], []
