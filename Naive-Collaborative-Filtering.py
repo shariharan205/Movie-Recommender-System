@@ -297,3 +297,17 @@ algos = [KNNWithMeans(k=20, sim_options={'name': 'pearson'}), NMF(n_factors=20),
          SVD(n_factors=20, init_mean=2.5)]
 threshold = 3
 algo_prec, algo_rec = [], []
+for algo in algos:
+    avg_prec, avg_rec = [], []
+    for t in range(1, 26):
+        t_prec, t_rec = [], []
+        for trainset, testset in kf.split(data):
+            algo.fit(trainset)
+            predictions = algo.test(testset)
+            precisions, recalls = precision_recall_at_k(predictions, k=t, threshold=threshold)
+            t_prec.append((sum(prec for prec in precisions.values()) / len(precisions)))
+            t_rec.append(sum(rec for rec in recalls.values()) / len(recalls))
+        avg_prec.append(np.mean(t_prec))
+        avg_rec.append(np.mean(t_rec))
+    algo_prec.append(avg_prec)
+    algo_rec.append(avg_rec)
