@@ -311,3 +311,12 @@ for algo in algos:
         avg_rec.append(np.mean(t_rec))
     algo_prec.append(avg_prec)
     algo_rec.append(avg_rec)
+
+plt.plot(algo_rec[0], algo_prec[0], lw=2, label='KNN')
+plt.plot(algo_rec[1], algo_prec[1], lw=2, label='NNMF')
+plt.plot(algo_rec[2], algo_prec[2], lw=2, label='MF with bias')
+plt.xlabel('Average Recall', fontsize=15)
+plt.ylabel('Average Precision', fontsize=15)
+plt.title("Precision vs Recall for different algorithms")
+plt.legend()
+plt.show()
