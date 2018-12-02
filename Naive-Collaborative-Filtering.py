@@ -320,3 +320,9 @@ plt.ylabel('Average Precision', fontsize=15)
 plt.title("Precision vs Recall for different algorithms")
 plt.legend()
 plt.show()
+
+train_set, test_set = train_test_split(data, test_size=0.1, random_state=0)
+threshold = 3
+algos = [KNNWithMeans(k=20, sim_options={'name': 'pearson'}), NMF(n_factors=20),
+         SVD(n_factors=20, init_mean=2.5)]
+algo_fpr, algo_tpr, algo_auc = [], [], []
