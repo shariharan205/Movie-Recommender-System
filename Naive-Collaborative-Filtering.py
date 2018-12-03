@@ -326,3 +326,16 @@ threshold = 3
 algos = [KNNWithMeans(k=20, sim_options={'name': 'pearson'}), NMF(n_factors=20),
          SVD(n_factors=20, init_mean=2.5)]
 algo_fpr, algo_tpr, algo_auc = [], [], []
+for algo in algos:
+    print('Algorithm is ', algo)
+    algo.fit(train_set)
+    predictions = algo.test(test_set)
+    pred_est = np.array([i.est for i in predictions])
+    actual_ratings = np.array([i.r_ui for i in predictions])
+    y_score = pred_est
+    y_true = actual_ratings >= threshold
+    fpr, tpr, _ = roc_curve(y_true, y_score)
+    roc_auc = auc(fpr, tpr)
+    algo_fpr.append(fpr)
+    algo_tpr.append(tpr)
+    algo_auc.append(roc_auc)
