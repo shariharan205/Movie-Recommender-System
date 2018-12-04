@@ -339,3 +339,12 @@ for algo in algos:
     algo_fpr.append(fpr)
     algo_tpr.append(tpr)
     algo_auc.append(roc_auc)
+
+plt.plot(algo_fpr[0], algo_tpr[0], lw=2, label='KNN, AUC = %0.4f' % algo_auc[0])
+plt.plot(algo_fpr[1], algo_tpr[1], lw=2, label='NNMF, AUC = %0.4f' % algo_auc[1])
+plt.plot(algo_fpr[2], algo_tpr[2], lw=2, label='MF with bias, AUC = %0.4f' % algo_auc[2])
+plt.xlabel('False Positive Rate (FPR)')
+plt.ylabel('True Positive Rate')
+plt.legend(loc='lower right')
+plt.title('ROC curves for different algorithms')
+plt.show()
